@@ -9,6 +9,7 @@ import (
 	"strings"
 	"errors"
 	"crypto/tls"
+	"net/http/httputil"
 )
 type Timeout struct {
 	Connect   time.Duration
@@ -77,8 +78,16 @@ func fetch(_url string, https bool) {
 	req.Header.Set("Accept-Encoding","utf-8")
 	req.Header.Set("Accept-Language","zh-CN,zh;q=0.8")
 	req.Header.Set("Connection","keep-alive")
+	// dump request....
+	dump,_ := httputil.DumpRequest(req, true)
+	fmt.Println(string(dump))
+	fmt.Println("==========")
 
 	resp,err := client.Do(req)
+
+	dump,_ = httputil.DumpResponse(resp, false)
+	fmt.Println(string(dump))
+	fmt.Println("==========")
 
 	switch err1 := err.(type) {
 	case *url.Error:
