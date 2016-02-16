@@ -5,11 +5,8 @@ import (
 	"io/ioutil"
 	"fmt"
     "io"
-    "os"
     "compress/gzip"
   "time"
-  "net"
-  "net/url"
 )
 // not follow redirect....
 func Gethtml3(url string) {
@@ -35,8 +32,12 @@ func Gethtml3(url string) {
   default:
     reader = response.Body
   }
+  var s string
+  if b, err := ioutil.ReadAll(reader); err == nil {
+    s = string(b)
+  }
 
-  io.Copy(os.Stdout, reader)
+  println(s)
 }
 func GetHTML(url string) {
   res, err := http.Get(url)
@@ -71,7 +72,7 @@ func GetHtml2(url string) {
   }
 }
 func GetHtmlTimeout(url string) {
-  to := time.Duration(time.Millisecond)
+  to := time.Duration(10000*time.Millisecond)
   client := http.Client{
     Timeout:to,
   }
@@ -89,5 +90,5 @@ func GetHtmlTimeout(url string) {
 }
 
 func main() {
-  GetHtmlTimeout("http://stackoverflow.com/")
+  Gethtml3("http://www.baidu.com")
 }

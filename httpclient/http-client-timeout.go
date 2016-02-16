@@ -56,9 +56,11 @@ func HttpClient() *http.Client {
 
 	return &http.Client{
 		CheckRedirect:noRedirect,
+		Timeout:time.Duration(1000000) * time.Millisecond,
 		Transport: &http.Transport{
 			Dial: TimeoutDialer(to),
-			Proxy: http.ProxyURL(proxyUrl),
+			Proxy:  http.ProxyURL(proxyUrl),
+			TLSClientConfig:nil,
 		},
 	}
 }
@@ -78,6 +80,8 @@ func fetch(_url string, https bool) {
 	req.Header.Set("Accept-Encoding","utf-8")
 	req.Header.Set("Accept-Language","zh-CN,zh;q=0.8")
 	req.Header.Set("Connection","keep-alive")
+	req.Header.Set("Connection","close")
+	req.Header.Set("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36")
 	// dump request....
 	dump,_ := httputil.DumpRequest(req, true)
 	fmt.Println(string(dump))
@@ -110,18 +114,10 @@ func fetch(_url string, https bool) {
 		fmt.Println("Could be from a Transport.CancelRequest")
 	}
 
-		fmt.Println(resp.ContentLength)
-		fmt.Println(resp.Status)
-		fmt.Println(resp.StatusCode)
-		fmt.Println(resp.TransferEncoding)
-		fmt.Println(resp.Proto)
-		for k,v := range resp.Header {
-			fmt.Println(k)
-			fmt.Println(v)
-		}
-
 	if err != nil {
 			fmt.Println("XXXXXX")
+		fmt.Println(resp.StatusCode)
+		fmt.Println(resp.Header.Get("Location"))
 	} else {
 		if resp.StatusCode == 200 {
 			body, _ := ioutil.ReadAll(resp.Body)
@@ -132,6 +128,7 @@ func fetch(_url string, https bool) {
 }
 func main() {
 //	fetch("http://120.27.109.242/")
-	fetch("https://www.baidu.com/", true)
-//	fetch("http://z.cn")
+//	fetch("https://www.baidu.com/", true)
+	//fetch("http://z.cn", false)
+	fetch("http://www.baidu.com", true)
 }
