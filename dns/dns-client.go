@@ -36,6 +36,10 @@ func main() {
     }
     // Stuff must be in the answer section
     for _, a := range r.Answer {
-        fmt.Printf("%v\n", a)
+        if a.Header().Rrtype == dns.TypeA {
+            fmt.Printf("A:%v\n", a)
+        } else {
+            fmt.Printf("Cname:%v\n",a)
+        }
     }
 }
