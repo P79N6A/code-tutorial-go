@@ -9,6 +9,7 @@ func main() {
     select {
     case msg := <- messages:
         fmt.Println("received messages", msg)
+	// Because of default,, it is nonblock... 
     default:
         fmt.Println("no message received")
     }
