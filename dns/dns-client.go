@@ -5,6 +5,7 @@ import (
     "net"
     "log"
     "fmt"
+    "time"
 )
 
 func main() {
@@ -15,16 +16,20 @@ func main() {
     config.Ndots = 1
     config.Timeout = 5
     config.Attempts = 2
-    config.Servers = append(config.Servers,"8.8.8.8")
+    localdns := "127.0.0.1"
+    //localdns := "114.114.114.114"
+    config.Servers = append(config.Servers, localdns)
 
-    c := new(dns.Client)
+    c := &dns.Client{
+        DialTimeout:time.Millisecond,
+    }
 
    // query := "www.a.shifen.com."
     query := "www.baidu.com"
 
     m := new(dns.Msg)
     m.SetQuestion(dns.Fqdn(query), dns.TypeA)
-    m.RecursionDesired = true
+    m.RecursionDesired = false
 
     r, _, err := c.Exchange(m, net.JoinHostPort(config.Servers[0], config.Port))
     if r == nil {
@@ -42,4 +47,6 @@ func main() {
             fmt.Printf("Cname:%v\n",a)
         }
     }
+
+    fmt.Println(r.String())
 }

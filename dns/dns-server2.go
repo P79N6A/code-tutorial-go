@@ -27,10 +27,15 @@ var server = &dns.Server{Addr: ":53", Net: "udp"}
 func main() {
    // server.TsigSecret = map[string]string{"axfr.": "so6ZGir4GPAqINNh9U5c3A=="}
     dns.HandleFunc(".", handleRequest)
-    err := server.ListenAndServe()
-    if err != nil {
-        fmt.Printf("Error %s", err.Error())
-        return
+    go func() {
+        err := server.ListenAndServe()
+        if err != nil {
+            fmt.Printf("Error %s", err.Error())
+            return
+        }
+    }()
+    for true {
+        time.Sleep(time.Second)
     }
 }
 
@@ -39,9 +44,9 @@ func handleRequest(w dns.ResponseWriter, r *dns.Msg) {
     fmt.Printf("get query %s", r.Question[0].Name)
     fmt.Printf("Query: %s",r.String())
     // remote request client ip...
-    fmt.Println(w.RemoteAddr().String())
 
     m.SetReply(r)
+
     m.Answer = []dns.RR{
         &dns.CNAME{
             Hdr:dns.RR_Header{Name: m.Question[0].Name, Rrtype: dns.TypeCNAME, Class: dns.ClassINET, Ttl: 120},
@@ -66,24 +71,12 @@ func handleRequest(w dns.ResponseWriter, r *dns.Msg) {
         newA("ipaddr.skydns.test. IN A 172.16.1.2"),
     }*/
 
+    m.Ns = make([]dns.RR,2)
+    m.Ns[0] = newSOA("qiniudns.com.           60      IN      SOA     ns3.dnsv5.com. enterprise3dnsadmin.dnspod.com. 1457923437 3600 180 1209600 180")
 
     m.Extra = make([]dns.RR, 1)
     m.Extra[0] = &dns.TXT{Hdr: dns.RR_Header{Name: m.Question[0].Name, Rrtype: dns.TypeTXT, Class: dns.ClassINET, Ttl: 0}, Txt: []string{"Hello example"}}
 
-/*
-   m.Answer[1] = &dns.A{
-        //Hdr:dns.RR_Header{Name: m.Question[0].Name, Rrtype: dns.TypeA, Class: dns.ClassINET, Ttl: 120},
-    }
-    */
-    if r.IsTsig() != nil {
-        if w.TsigStatus() == nil {
-            // *Msg r has an TSIG record and it was validated
-            m.SetTsig("axfr.", dns.HmacMD5, 300, time.Now().Unix())
-        } else {
-            // *Msg r has an TSIG records and it was not valided
-        }
-    }
-    fmt.Println("xxxxxx")
     w.WriteMsg(m)
 }
 

@@ -10,6 +10,8 @@ import "regexp"
 
 func main() {
 
+	rrr,_ := regexp.Compile("[0-9]+.[0-9]+.[0-9]+.[0-9]+")
+	fmt.Println(rrr.FindString("-[1r.1.1.1.=]::32"))
 	// This tests whether a pattern matches a string.
 	//match, _ := regexp.MatchString("p([a-z]+)ch", "peach")
 	//fmt.Println(match)
