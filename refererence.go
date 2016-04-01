@@ -22,11 +22,16 @@ func modifySlice(slice []int) {
 	for i,_ := range slice {
 		slice[i] += 1
 	}
+	slice = append(slice,33)
+}
+func modifySlice2(slice *[]int) {
+	*slice = append(*slice,33)
 }
 func modifyMap(m map[int]int) {
 	for k,_ := range m {
 		m[k] += 1
 	}
+	m[333] = 999
 }
 func main() {
 	// array is not reference
@@ -36,6 +41,8 @@ func main() {
 	// slice
 	slice := []int{1,2,3,4,5}
 	modifySlice(slice)
+	fmt.Println(slice)
+	modifySlice2(&slice)
 	fmt.Println(slice)
 	// map
 	m := map[int]int{1:1,2:3,3:4}
