@@ -40,6 +40,7 @@ func main() {
 }
 
 func handleRequest(w dns.ResponseWriter, r *dns.Msg) {
+	r.Question[0].Qtype
     m := new(dns.Msg)
     fmt.Printf("get query %s", r.Question[0].Name)
     fmt.Printf("Query: %s",r.String())
