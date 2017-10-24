@@ -1,0 +1,29 @@
+package main
+
+import (
+        "crypto/md5"
+        "fmt"
+        "encoding/hex"
+        "encoding/base32"
+        "crypto/des"
+)
+func GetMD5Hash(text string) string {
+        hasher := md5.New()
+        hasher.Write([]byte(text))
+        return hex.EncodeToString(hasher.Sum(nil))
+}
+
+func main() {
+        str := "this is a exampiile"
+        fmt.Println(getbase32(str))
+ //       fmt.Printf("%x", md5.Sum([]byte(str)))
+
+//        fmt.Sprintf(GetMD5Hash(str))
+}
+
+func getbase32(str string) string {
+        return  base32.HexEncoding.EncodeToString([]byte(str))
+}
+func aesEn() {
+        des.BlockSize
+}

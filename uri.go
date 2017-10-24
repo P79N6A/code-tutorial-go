@@ -17,4 +17,6 @@ func main() {
 	fmt.Println(u.Path[1:])
 	fmt.Println(u.User.Username())
 	fmt.Println(u.User.Password())
+        var aaaa []string
+        fmt.Println(len(aaaa))
 }

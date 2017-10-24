@@ -5,6 +5,8 @@ import (
 )
 
 func main() {
+        t,_ := time.Parse("","21-Jul-2016 00:00:00.013")
+        fmt.Println(time.Now())
 	fmt.Println(time.Now().Unix())
 	fmt.Println(time.Now().Date())
 	fmt.Println(time.Now().Hour())
@@ -14,7 +16,7 @@ func main() {
 	y,m,d := time.Now().Date()
 	time.Now().Month()
 	fmt.Println(y)
-	fmt.Println(m.String())
+	fmt.Println(int(m))
 	fmt.Println(d)
 	value := fmt.Sprintf("%s %d, %d 00:00AM",m.String(), d, y)
 
@@ -26,5 +28,21 @@ func main() {
 	fmt.Println(t)
 
 	fmt.Println(t.Unix())
+        yestoday := time.Now().AddDate(0,0,-1)
+        y,m,d = yestoday.Date()
+        fmt.Println(time.Date(y,m,d,0,0,0,0,time.Local).Unix())
+
+        fmt.Println(yestoday.Unix())
+        fmt.Println(y)
+	fmt.Println(m.String())
+	fmt.Println(d)
+
+        fmt.Println(GetCurrentDate())
 }
 
+
+func GetCurrentDate() string {
+        // return 20160102
+        y,m,d := time.Now().Date()
+        return fmt.Sprintf("%d%02d%02d",y,int(m),d)
+}
