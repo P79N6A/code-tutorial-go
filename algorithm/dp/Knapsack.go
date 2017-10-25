@@ -19,7 +19,7 @@ import "fmt"
         f(i,w) = f(i-1,w-wi) + vi // pick
         f(i,w) = f(i-1,w)  // no pick
 */
-func DP(array []int,k,left int,result *[]int) int {
+func DP(array []int,k,left int,result *[7][21]int) int {
         // input : k, 第k个物品
         // input : left 剩余容量
         // output : 最大价值
@@ -27,24 +27,29 @@ func DP(array []int,k,left int,result *[]int) int {
                 return 0
         }
         if array[k] > left {
-                (*result)[k] = 0
+                (*result)[k][left] = -1
+                fmt.Printf("[k=%d,left:%d] => Same With [k=%d,left:%d]\n",k,left,k-1,left)
                 return DP(array,k-1,left,result)
         } else {
                 pick := DP(array,k-1,left - array[k],result) + array[k]
                 nopick := DP(array,k-1,left,result)
                 if pick > nopick {
-                        (*result)[k] = 1
+                        (*result)[k][left] = pick
+                        fmt.Printf("[k=%d,left:%d] => %d\n",k,left,nopick)
                         return pick
                 } else {
-                        (*result)[k] = 0
+                        (*result)[k][left] = nopick
+                        fmt.Printf("[k=%d,left:%d] => %d\n",k,left,nopick)
                         return nopick
                 }
         }
 }
 
 func main() {
-        result := make([]int,7)
+        result := [7][21]int{}
         ret := DP([]int{9,3,4,10,5,6,4},6,20,&result)
         fmt.Println(ret)
-        fmt.Println(result)
+        for _,v := range result {
+                fmt.Println(v)
+        }
 }
