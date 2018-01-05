@@ -24,7 +24,7 @@ func main() {
 	form := "January 2, 2006 00:00PM"
 
 	// Parse the string according to the form.
-	t, _ := time.Parse(form, value)
+	t, _ = time.Parse(form, value)
 	fmt.Println(t)
 
 	fmt.Println(t.Unix())
@@ -44,5 +44,6 @@ func main() {
 func GetCurrentDate() string {
         // return 20160102
         y,m,d := time.Now().Date()
-        return fmt.Sprintf("%d%02d%02d",y,int(m),d)
+        h,mi,s := time.Now().Clock()
+        return fmt.Sprintf("%d%02d%02d%02d%02d%02d",y,int(m),d,h,mi,s)
 }
