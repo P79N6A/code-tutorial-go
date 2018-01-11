@@ -20,4 +20,6 @@ func main() {
         fmt.Println(int(m))
         fmt.Println(d)
         fmt.Printf("%.2d",11)
+
+        fmt.Println(strings.HasSuffix("XXXXX",""))
 }
