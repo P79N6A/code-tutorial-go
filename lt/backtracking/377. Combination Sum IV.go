@@ -1,9 +1,10 @@
 package main
 
 import (
-        "fmt"
-        "sort"
+    "fmt"
+    "sort"
 )
+
 /*
 Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
 
@@ -73,6 +74,56 @@ func solve(nums []int, j int, target int,num *int,ret *[]int)   {
         }
 }
 
+func combinationSum4(nums []int, target int) int {
+    dp := make([]int,target+1)
+    dp[0]=1
+    for i:=0;i<len(dp);i++ {
+        for j:=0;j<len(nums);j++ {
+            if i >= nums[j] {
+                dp[i] += dp[i-nums[j]]
+            }
+        }
+    }
+    return dp[target]
+}
+func combinationSum44(nums []int, target int) int {
+    if len(nums) <= 0 {return 0}
+    dp := make([]int,target+1)
+    sort.Ints(nums)
+    dp[0]=1
+    for i:=1;i<=target;i++ {
+        for _,n := range nums {
+            if i-n>=0{
+                dp[i]+=dp[i-n]
+            }
+        }
+    }
+    fmt.Println(dp)
+    return dp[target]
+}
+func combinationSum41(nums []int, target int) int {
+    ret := make([][]int,0)
+    res := make([]int,0)
+    bt(nums,target,0,&res,&ret)
+    fmt.Println(ret)
+    return len(ret)
+}
+func bt(nums []int,target int,sum int,res *[]int, ret *[][]int) {
+    if sum > target {return}
+    if sum == target {
+        fmt.Println(res)
+        n := make([]int,len(*res))
+        copy(n,*res)
+        *ret = append(*ret,n)
+        return
+    }
+    for i:=0;i<len(nums);i++ {
+        *res = append(*res,nums[i])
+        bt(nums,target,sum+nums[i],res,ret)
+        *res = (*res)[:len(*res)-1]
+    }
+}
 func main() {
-        fmt.Println(combinationSum4([]int{1,2,3},4))
+    fmt.Println(combinationSum4([]int{4,2,1},32))
+    fmt.Println(combinationSum44([]int{4,2,1},32))
 }

@@ -18,14 +18,21 @@ Derive your algorithm's runtime complexity.
 */
 
 func canWin(str string) bool {
+        /*
+        只要有一种方法能赢就是可以赢[返回true的时机]
+        只有所有的方法都不能赢才是输了[返回false的时机]
+        */
         for i:=1;i<len(str);i++ {
                 if str[i-1]=='+' && str[i]=='+' {
                         substr := str[:i-1] + "--" + str[i+1:]
+                        // 取反，变成了严格的返回
                         if !canWin(substr) {
                                 return true
                         }
                 }
         }
+        // 对于不能赢是严格的，所有的尝试都不能成功才是失败。
+        // 因为对手都是聪明的，会使用最优的结果
         return false
 }
 

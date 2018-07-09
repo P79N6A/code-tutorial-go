@@ -92,4 +92,5 @@ func diff(root1,root2 *TreeNode) bool {
         right := diff(root1.Right,root2.Right)
         if right == false {return false}
         return true
-}
+
+)

@@ -134,6 +134,9 @@ func GetLevelByViewName(view string) int {
 }
 func GetUpLevelViewName(view string) string {
         idx := strings.LastIndex(view,"-")
+	if idx < 0 {
+
+	}
         return view[:idx]
 }
 func main() {
