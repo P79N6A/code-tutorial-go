@@ -24,4 +24,7 @@ func main() {
 	ip4 := ip.To4()
 	fmt.Println(ip4[1])
 	fmt.Println(len(ip4))
+        lable,ok:=dns.IsDomainName("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXssssssssssssssssssssssssssXXXX.com")
+        fmt.Println(lable)
+        fmt.Println(ok)
 }

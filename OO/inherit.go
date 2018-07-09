@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type ITask interface {
 	Inject() string
 }
@@ -22,5 +24,5 @@ func (t* MyTask)Inject() string {
 
 func main() {
 	var t MyTask
-	t.Run(&t)
+        fmt.Println(t.Inject())
 }

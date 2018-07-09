@@ -19,4 +19,5 @@ func main() {
 	for _,i := range ll {
 		fmt.Println(a[i])
 	}
+        fmt.Println(hash.GenerateKey(20))
 }

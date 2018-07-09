@@ -17,8 +17,8 @@ name                    IN SOA  a6.nstld.com. hostmaster.nic.name. (
                                 )
 $TTL 10800      ; 3 hours
 name.	10800	IN	NS	name.
-               IN       NS      g6.nstld.com.
-               7200     NS      h6.nstld.com.
+               IN       NS      g6.nstld.com
+               7200     NS      h6.nstld.com
              3600 IN    NS      j6.nstld.com.
              IN 3600    NS      k6.nstld.com.
                         NS      l6.nstld.com.
@@ -46,10 +46,11 @@ moutamassey             NS      ns01.yahoodomains.jp.
 		   fmt.Println(x.Error)
 		} else {
 		  // Do something with x.RR
-			fmt.Println(x.RR)
-			fmt.Println(x.RR.Header())
+			//fmt.Printf("Name:%s, Type:%s, Class:%s, RDLen:%d, TTL:%d\n RR:%s\n",x.Header().Name, dns.TypeToString[x.Header().Rrtype],dns.ClassToString[x.Header().Class], x.Header().Rdlength,x.Header().Ttl,x.RR)
+                        if x.Header().Rrtype == dns.TypeNS {
 
-			fmt.Printf("Name:%s, Type:%s,Class:%s,RDLen:%d,TTL:%d\n ",x.Header().Name, dns.TypeToString[x.Header().Rrtype],dns.ClassToString[x.Header().Class], x.Header().Rdlength,x.Header().Ttl)
+                                fmt.Println(x.RR.(*dns.NS).Ns)
+                        }
 	      }
 	}
 }
