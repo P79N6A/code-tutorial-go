@@ -19,4 +19,11 @@ func main() {
                 }
                 fmt.Println()
         }
+        arr2 := [2][3]int{}
+        fmt.Println(arr2)
+        for i:=0;i<2;i++ {
+                for j:=0;j<3;j++ {
+                        fmt.Println(i,j,arr2[i][j])
+                }
+        }
 }

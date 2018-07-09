@@ -29,6 +29,7 @@ https://www.jianshu.com/p/390147c78967
 2.Lazy Evaluation
 3.currying
 
+
 ==其他==
 1.匿名函数 - lambda - 闭包/closure
 2.闭包
@@ -40,7 +41,12 @@ https://www.jianshu.com/p/390147c78967
 > 需要一个函数，但是又不想费神去命名一个函数
 > python: map( lambda x: x*x, [y for y in range(10)] )
 
-4.python/javascript/scala/haskell
+4.lambda serverless framework
+> Faas:function as a service
+> serverless  vs. MicroService
+
+
+5.python/javascript/scala/haskell
 
 https://segmentfault.com/a/1190000010632526
 */

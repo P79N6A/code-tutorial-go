@@ -3,9 +3,12 @@ package main
 import "fmt"
 
 func main() {
-        ss := make(map[[]byte]int)
-        ss[[]byte("xxx")] = 1
-        if _,ok := ss[[]byte("xxx")];ok {
-                fmt.Println("XXXXXXX")
+        aaa := []string{"a","b","c","d","e"}
+        for i := 0;i < len(aaa);i++ {
+                nss := make([]string,0)
+                nss = append(nss,aaa[i:]...)
+                nss = append(nss,aaa[:i]...)
+                fmt.Println(nss)
         }
+
 }

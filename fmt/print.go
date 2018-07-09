@@ -19,5 +19,8 @@ func main() {
         fmt.Println(e)
         var sss []string
         fmt.Println(len(sss))
+        fmt.Println(^(99-1))
+        fmt.Println(99^0)
+    fmt.Println(99^1)
 
 }
