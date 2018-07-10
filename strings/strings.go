@@ -9,8 +9,21 @@ import (
 )
 
 
+func repeat() {
+        str := "aaa"
+        ns := strings.Repeat(str,2)
+        fmt.Println(ns)
+        strings.Contains(ns,str)
+}
+func substr() {
+        str := "aaab"
+        fmt.Println(str[(len(str)-1):])
+}
 
 func main() {
+        substr()
+}
+func xxx() {
         aa := strings.Split("com.",".")
         fmt.Println(aa)
         fmt.Println(len(aa))
