@@ -14,5 +14,4 @@ func main() {
         f.Close()
         s := string(buf.Bytes())
         fmt.Println(s)
-
 }

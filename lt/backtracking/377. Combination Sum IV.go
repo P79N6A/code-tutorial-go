@@ -29,7 +29,51 @@ Follow up:
 What if negative numbers are allowed in the given array?
 How does it change the problem?
 What limitation we need to add to the question to allow negative numbers?
+
+Credits:
+Special thanks to @pbrother for adding this problem and creating all test cases.
+
+dp[i]=sum(dp[i-x],x in nums)
 */
+
+func combinationSum4(nums []int, target int) int {
+        if len(nums) <= 0 {return 0}
+        dp := make([]int,target+1)
+        sort.Ints(nums)
+        dp[0]=1
+        for i:=1;i<=target;i++ {
+                for _,n := range nums {
+                        if i-n>=0{
+                                dp[i]+=dp[i-n]
+                        }
+                }
+        }
+        fmt.Println(dp)
+        return dp[target]
+}
+func combinationSum41(nums []int, target int) int {
+        num := 0
+        ret := make([]int,0)
+        solve(nums,0,target,&num,&ret)
+        return num
+}
+func solve(nums []int, j int, target int,num *int,ret *[]int)   {
+        if target == 0 {
+                *num += 1
+                fmt.Println(*ret)
+                return
+        }
+        if target < 0 {
+                return
+        }
+        for i:=j;i<len(nums);i++ {
+                *ret = append(*ret,nums[i])
+                solve(nums, j, target - nums[i], num,ret)
+                *ret = (*ret)[:len(*ret)-1]
+                solve(nums, j + 1, target, num,ret)
+        }
+}
+
 func combinationSum4(nums []int, target int) int {
     dp := make([]int,target+1)
     dp[0]=1
@@ -82,5 +126,4 @@ func bt(nums []int,target int,sum int,res *[]int, ret *[][]int) {
 func main() {
     fmt.Println(combinationSum4([]int{4,2,1},32))
     fmt.Println(combinationSum44([]int{4,2,1},32))
-    //combinationSum4([]int{1,2,3},4)
 }

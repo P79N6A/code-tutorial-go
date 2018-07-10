@@ -3,10 +3,12 @@ package main
 import (
         "fmt"
         "strings"
-        "net"
         "time"
+        "net"
         "net/url"
 )
+
+
 
 func main() {
         aa := strings.Split("com.",".")

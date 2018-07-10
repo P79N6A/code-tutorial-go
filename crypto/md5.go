@@ -4,8 +4,8 @@ import (
         "crypto/md5"
         "fmt"
         "encoding/hex"
-        "encoding/base32"
         "crypto/des"
+        "encoding/base32"
 )
 func GetMD5Hash(text string) string {
         hasher := md5.New()
@@ -14,6 +14,10 @@ func GetMD5Hash(text string) string {
 }
 
 func main() {
+        str := "fweihgorwj"
+        fmt.Printf("%x", md5.Sum([]byte(str)))
+
+        fmt.Sprintf(GetMD5Hash(str))
         str := "this is a exampiile"
         fmt.Println(getbase32(str))
  //       fmt.Printf("%x", md5.Sum([]byte(str)))

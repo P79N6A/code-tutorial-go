@@ -1,10 +1,10 @@
 package main
 
 import (
-        "strings"
-        "github.com/davecgh/go-spew/spew"
         "fmt"
+        "strings"
         "time"
+        "github.com/davecgh/go-spew/spew"
 )
 
 type OBJ struct {

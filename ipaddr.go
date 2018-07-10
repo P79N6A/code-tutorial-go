@@ -77,6 +77,25 @@ func BinarySeries2IP(ipi [32]byte) net.IP {
         return net.IPv4(a,b,c,d)
 }
 
+func GenCIDRFromIP(ip1,ip2 string) string {
+        ip1Ser := IP2BinarySeries(net.ParseIP(ip1))
+        ip2Ser := IP2BinarySeries(net.ParseIP(ip2))
+        fmt.Println(ip1Ser)
+        fmt.Println(ip2Ser)
+        i := 0
+        for ;i < len(ip1Ser);i++ {
+                if ip1Ser[i] != ip2Ser[i] {
+                        break
+                }
+        }
+        mask := i
+        for ;i < 32;i++ {
+                ip1Ser[i] = byte(0)
+        }
+        fmt.Println(ip1Ser)
+        ipi := BinarySeries2IP(ip1Ser)
+        return fmt.Sprintf("%s/%d",ipi.String(),mask)
+}
 func CIDR2BinarySeries(cidr string) (error, []byte){
         ip, ipnet, err := net.ParseCIDR(cidr)
         if err != nil {

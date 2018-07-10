@@ -38,6 +38,13 @@ func main() {
         soa := newSOA("jerry.com.      IN      SOA    ns1.tom.com. webmaster.ewcache.com. 1077295087 10800 3600 604800 600")
         fmt.Println(soa)
 
+	ip := net.ParseIP("1.2.3.4")
+	ip4 := ip.To4()
+	fmt.Println(ip4[1])
+	fmt.Println(len(ip4))
+        lable,ok:=dns.IsDomainName("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXssssssssssssssssssssssssssXXXX.com")
+        fmt.Println(lable)
+        fmt.Println(ok)
         //aaa := newA("iiiiiiiiiiiiiiiiiiioooiioooooiii33333333333333333333333rrr9rrrrr.COM. 600 IN A 11.1.1.1")
         //aaa := newA("wekrjkekrekrekrrrrrrrrrrr3333333333333333333333333333333333333333333333333333333333333333333333333333333333rrr9rrrrr.COM. 600 IN A 11.1.1.1")
         //fmt.Println(aaa)

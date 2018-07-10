@@ -3,6 +3,24 @@ package main
 import "fmt"
 
 func nextGreaterElements(nums []int) []int {
+        ret := make([]int,len(nums))
+        for i:=0;i<len(ret);i++ {ret[i]=-1}
+        stack := make([]int,0)
+        for i:=2*len(nums)-1;i>=0;i-- {
+                cur := nums[i%len(nums)]
+                for len(stack) > 0 && cur >= stack[len(stack)-1] {
+                        stack = stack[:len(stack)-1]
+                }
+                if len(stack)<=0 || cur < stack[len(stack)-1] {
+                        if len(stack) > 0 {
+                                ret[i%len(nums)]=stack[len(stack)-1]
+                        }
+                        stack = append(stack,cur)
+                }
+        }
+        return ret
+}
+func nextGreaterElements2(nums []int) []int {
     /*
     从右往左递减栈；解决右侧第一个比元素大的值
     处理在入栈过程中，stack不需要保持下标
@@ -57,7 +75,6 @@ func nextGreaterElements3(nums []int) []int {
     }
     return ret
 }
-
 func main() {
-    fmt.Println(nextGreaterElements([]int{1, 2, 1}))
+fmt.Println(nextGreaterElements([]int{1, 2, 1}))
 }
