@@ -62,6 +62,9 @@ func lower_bound(arr []int,x int) int {
 }
 
 func main() {
-    fmt.Println(lower_bound([]int{1,2,3,3,3,3,4,5},5))
+    fmt.Println(upperBound([]int{1,2,3,3,3,3,4,5},5))
+    a := []int{1,2,3,4,5}
+    copy(a[1:],a[2:])
+    fmt.Println(a)
     
 }
