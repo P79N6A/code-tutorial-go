@@ -1,4 +1,4 @@
-package how_to_think
+package main
 
 import (
     "fmt"

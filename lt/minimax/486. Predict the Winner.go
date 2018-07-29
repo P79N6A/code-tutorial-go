@@ -46,8 +46,8 @@ public class Solution {
 
 func PredictTheWinner(nums []int) bool {
     solve(nums,0,len(nums)-1,1)
-    solve3(nums)
-    return solve2(nums,0,len(nums)-1)>=0
+    return solve3(nums)
+    //return solve2(nums,0,len(nums)-1)>=0
 }
 func solve(nums []int, s,e int, turn int) int {
     if s == e {
@@ -86,7 +86,7 @@ func solve2(nums []int, s,e int) int {
         }
         return dp[0][nums.length - 1] >= 0;
 */
-func solve3(nums []int) {
+func solve3(nums []int) bool {
     dp := make([][]int,0)
     for i:=0;i<len(nums)+1;i++ {
         dp = append(dp,make([]int,len(nums)))
@@ -105,7 +105,7 @@ func solve3(nums []int) {
     for _,d := range dp {
         fmt.Println(d)
     }
-
+        return dp[0][len(nums)-1]>=0
 }
 
 
