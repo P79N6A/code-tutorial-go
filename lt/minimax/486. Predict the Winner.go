@@ -47,7 +47,7 @@ public class Solution {
 func PredictTheWinner(nums []int) bool {
     solve(nums,0,len(nums)-1,1)
     return solve3(nums)
-    //return solve2(nums,0,len(nums)-1)>=0
+    //return miniMax(nums,0,len(nums)-1)>=0
 }
 func solve(nums []int, s,e int, turn int) int {
     if s == e {
@@ -61,18 +61,36 @@ func solve(nums []int, s,e int, turn int) int {
     }
     return b
 }
-//谁都去得是当前的最大收益
-func solve2(nums []int, s,e int) int {
+func miniMaxWithCache(nums []int, s,e int,cache map[int]int) int {
     if s == e {
         return  nums[s]
     }
-    a := nums[s] - solve2(nums,s+1,e)
-    b := nums[e] - solve2(nums,s,e-1)
+    key := s << 12 + e
+    if _,ok := cache[key];ok {return cache[key]}
+    a := nums[s] - miniMaxWithCache(nums,s+1,e,cache)
+    b := nums[e] - miniMaxWithCache(nums,s,e-1,cache)
     if a > b {
-        fmt.Println(a,nums[s])
+        cache[key]=a
         return a
     }
-    fmt.Println(b,nums[e])
+    cache[key]=b
+    return b
+}
+//谁都去得是当前的最大收益
+func miniMax(nums []int, s,e int) int {
+    /*
+    两个人每个都想得到最大收益
+    返回值是两个人收益之差，如果大于0，则第一个人必赢
+    这个函数保证差值最大，由于递归的时候乘以-1，正好可以反向相加
+    */
+    if s == e {
+        return  nums[s]
+    }
+    a := nums[s] - miniMax(nums,s+1,e)
+    b := nums[e] - miniMax(nums,s,e-1)
+    if a > b {
+        return a
+    }
     return b
 }
 /*
