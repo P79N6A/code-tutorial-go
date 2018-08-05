@@ -2,6 +2,7 @@ package main
 
 import (
         "fmt"
+        "strconv"
 )
 
 func main() {
@@ -11,6 +12,7 @@ func main() {
         fmt.Println(nthMagicalNumber(3,6,4))//10
         fmt.Println(nthMagicalNumber(1000000000,40000, 40000))//10
         fmt.Println(nthMagicalNumber(1000000000,40000, 40000))//10
+        strconv.Atoi()
 }
 /*
   int nthMagicalNumber(int N, int A, int B) {
