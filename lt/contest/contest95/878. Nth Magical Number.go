@@ -5,12 +5,12 @@ import (
 )
 
 func main() {
-    fmt.Println(nthMagicalNumber(1, 2, 3))                  //2
-    fmt.Println(nthMagicalNumber(4, 2, 3))                  //6
-    fmt.Println(nthMagicalNumber(5, 2, 4))                  //10
-    fmt.Println(nthMagicalNumber(3, 6, 4))                  //10
-    fmt.Println(nthMagicalNumber(1000000000, 40000, 40000)) //10
-    fmt.Println(nthMagicalNumber(1000000000, 40000, 40000)) //10
+        fmt.Println(nthMagicalNumber(1, 2, 3))//2
+        fmt.Println(nthMagicalNumber(4, 2, 3))//6
+        fmt.Println(nthMagicalNumber(5, 2, 4))//10
+        fmt.Println(nthMagicalNumber(3,6,4))//10
+        fmt.Println(nthMagicalNumber(1000000000,40000, 40000))//10
+        fmt.Println(nthMagicalNumber(1000000000,40000, 40000))//10
 }
 
 /*
