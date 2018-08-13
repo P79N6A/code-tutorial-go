@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+)
 
 func lowerBound(nums []int,target int) int {
     l,r := 0,len(nums)
@@ -66,5 +68,24 @@ func main() {
     a := []int{1,2,3,4,5}
     copy(a[1:],a[2:])
     fmt.Println(a)
-    
+
+    fmt.Println(bslessOne([]int{1,2,3,4,6,7},5))
+    fmt.Println(bslessOne([]int{1,2,3,4,6,7},6))
+    fmt.Println(bslessOne([]int{1,2,3,4,6,7},8))
+    fmt.Println(bslessOne([]int{1,2,3,4,6,7},0))
+}
+
+func bslessOne(data []int,key int) int {
+    l,r := 0,len(data)
+    for l < r {
+        m := (l+r)/2
+        if data[m] == key {
+            return m
+        } else if data[m] < key {
+            l = m+1
+        } else {
+            r = m
+        }
+    }
+    return r-1
 }

@@ -13,4 +13,14 @@ func main() {
         }
 
         fmt.Println(s)
+
+    slice1 := make([]int, 2, 5)
+    slice1 = append(slice1,0)
+    slice1 = append(slice1,0)
+    slice1 = append(slice1,0)
+    slice1 = append(slice1,0)
+    slice1 = append(slice1,0)
+    slice1 = append(slice1,0)
+    fmt.Println(slice1, cap(slice1))
+
 }
