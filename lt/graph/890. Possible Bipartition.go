@@ -75,7 +75,7 @@ func dfs(adj [][]int,v int, color *[]int) {
     只管染色，相邻的没有染色的，染成相反的颜色
     */
     for _,u := range adj[v] {
-        if (*color)[u] == 0 {
+        if (*color)[u] == 0 {  // 只处理一次，处理过的不管了。留着验证就行了
             (*color)[u]=-(*color)[v] // 反色
             dfs(adj,u,color)
         }
