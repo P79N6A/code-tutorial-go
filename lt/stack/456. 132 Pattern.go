@@ -47,6 +47,12 @@ func find132pattern(nums []int) bool {
     }
     stack := make([]int,0)
     // 从后往前
+    /*
+    min数据帮我们解决了1-3关系
+    从后往前， stack，出栈原因是不满足1-2关系
+    如果满足了1-2关系， 再看栈顶是否满足3-2关系，满足就是true
+    不满足，则入栈。因为从后往前，min会变大，会有新的1-2关系。递减栈
+    */
     for i:=len(nums)-1;i>=0;i-- {
         if nums[i]>min[i] { // 1-3 关系满足
             for len(stack)> 0 && stack[len(stack)-1] <= min[i] { // 1-2关系满足
@@ -59,11 +65,13 @@ func find132pattern(nums []int) bool {
             }
             // 当前关系已经是1-3-4了，3入栈 递减栈关系，入栈，看下一个是否符合逻辑
             stack = append(stack,nums[i])
+            fmt.Println(stack)
         }
     }
     return false
 }
 
 func main() {
-    fmt.Println(find132pattern([]int{6,11,12,3,4,5}))
+    //fmt.Println(find132pattern([]int{6,11,12,3,4,5}))
+    fmt.Println(find132pattern([]int{3,5,0,3,2}))
 }
