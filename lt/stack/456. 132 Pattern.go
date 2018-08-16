@@ -64,6 +64,7 @@ func find132pattern(nums []int) bool {
                 return true
             }
             // 当前关系已经是1-3-4了，3入栈 递减栈关系，入栈，看下一个是否符合逻辑
+            // 下一个元素的1，3都会发生变化了
             stack = append(stack,nums[i])
             fmt.Println(stack)
         }
