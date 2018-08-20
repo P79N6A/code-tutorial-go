@@ -12,8 +12,16 @@ func main() {
       Left *TreeNode
       Right *TreeNode
   }
-func constructFromPrePost(pre []int, post []int) *TreeNode {
-        return solve(pre,post)
+func constructFromPrePost(pre,post []int) *TreeNode {
+    if len(pre)<=0 {return nil}
+    if len(pre) == 1 {return &TreeNode{pre[0],nil,nil}}
+    root := &TreeNode{pre[0],nil,nil}
+    i := 0
+    // 通过前序第一个在后序中位置就能判断左子树序列
+    for pre[1]!=post[i]{i++}
+    root.Left = constructFromPrePost(pre[1:i+2],post[:i+1])
+    root.Right = constructFromPrePost(pre[i+2:],post[i+1:len(post)-1])
+    return root
 }
 func solve(pre,post []int) *TreeNode {
         if len(pre)<=0 {return nil}
