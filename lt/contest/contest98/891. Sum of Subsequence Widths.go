@@ -16,10 +16,10 @@ func sumSubseqWidths(A []int) int {
     sort.Ints(A)  // 排序后可以确定最大最小值
     ret,factor := 0,1
     for i := 0; i < len(A); i++ {
-        ret = (ret + factor*A[i]-factor*A[len(A)-1-i]) % 1000000007
-        factor = (factor*2)% 1000000007
+        ret = (ret + factor*A[i]-factor*A[len(A)-1-i]) % (1e9+7)
+        factor = (factor*2)% (1e9+7)
     }
-    return ret % 1000000007
+    return ret % (1e9+7)
 }
 func sumSubseqWidthsDirect(A []int) int {
     // O(N2),超时了
@@ -30,10 +30,10 @@ func sumSubseqWidthsDirect(A []int) int {
         for j := i + 1; j < len(A); j++ {
             if cache[j-i-1] <= 0 {
                 cache[j-i-1]=1
-                for ii := 0; ii < j-i-1; ii++ {cache[j-i-1] = (cache[j-i-1] * 2) % 1000000007}
+                for ii := 0; ii < j-i-1; ii++ {cache[j-i-1] = (cache[j-i-1] * 2) % (1e9+7)}
             }
-            ret = (ret + uint64(A[j] - A[i])*cache[j-i-1]) % 1000000007
+            ret = (ret + uint64(A[j] - A[i])*cache[j-i-1]) % (1e9+7)
         }
     }
-    return int(ret % 1000000007)
+    return int(ret % (1e9+7))
 }

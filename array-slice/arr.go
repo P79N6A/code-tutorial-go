@@ -12,4 +12,6 @@ func main() {
     }
     f(grid)
     fmt.Println(grid)
+    fmt.Println(10e5==1000000)
+    fmt.Println(1e5)
 }
