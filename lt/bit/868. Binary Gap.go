@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "math"
+)
 
 /*
 Given a positive integer N, find and return the longest distance between two consecutive 1's in the binary representation of N.
@@ -61,5 +64,9 @@ func binaryGap(N int) int {
     return mcon+1
 }
 func main() {
+    var ii int64 = math.MinInt32
+    fmt.Println(ii)
+    fmt.Println(math.Abs(float64(ii)))
+    fmt.Println(-1*ii)
     fmt.Println(binaryGap(8))
 }

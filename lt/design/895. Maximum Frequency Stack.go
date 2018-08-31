@@ -57,6 +57,7 @@ func main() {
 解法一：heap，结构Item包含频次freq和索引idx，Less判断分两步，频次相同看索引，否则看频次。
 进入heap元素，重复数字因为freq变化会重复进入。push是O(logn)的，调整堆的复杂度 pop是O(1)的
 FreqStack; 再次熟悉下套路的IntHeap写法
+
 解法二: stack of stack。 纵向stack维持的是freq，横向stack维持的idx。这种方式好像更清晰些。
 Push/Pop都是O(1)的。重复的数字，还是会重复的进入stack
 FreqStack2
