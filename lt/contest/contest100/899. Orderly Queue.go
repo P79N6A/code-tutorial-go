@@ -36,7 +36,8 @@ Note:
 S consists of lowercase letters only.
 */
 func main() {
-        fmt.Println(orderlyQueue("bxxweesaca",3))
+        //fmt.Println(orderlyQueue("bxxweesaca",3))
+        fmt.Println(orderlyQueue("gxzv",4))
 }
 
 
@@ -60,6 +61,8 @@ func orderlyQueue(S string, K int) string {
         for i:=0;i<len(finish);i++ {
                 fset[finish[i]]=true
         }
+        fmt.Println(finish)
+        if K >= len(S) {return finish}
         return solve(finish,fset,K,S)
 }
 func solve(finish string,fset map[byte]bool,K int, S string) string {
