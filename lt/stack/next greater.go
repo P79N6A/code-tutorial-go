@@ -76,5 +76,5 @@ func nextGreaterElements3(nums []int) []int {
     return ret
 }
 func main() {
-fmt.Println(nextGreaterElements([]int{1, 2, 1}))
+        fmt.Println(nextGreaterElements([]int{1, 2, 1}))
 }
