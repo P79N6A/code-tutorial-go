@@ -8,17 +8,17 @@ func main() {
 }
 
 func subarrayBitwiseORs(A []int) int {
-        retSet := make(map[int]int)
-        tail := make(map[int]int)
+        retSet := make(map[int]bool) // all result
+        tail := make(map[int]bool)  //  last result
         for i:=0;i<len(A);i++ {
-                ntail := make(map[int]int)
-                for k,_ := range tail {
-                        ntail[k|A[i]]=1
-                        retSet[k|A[i]]=1
+                ntail := make(map[int]bool) // new tail result.
+                for k,_ := range tail { //因为要遍历，所有需要new一个新的ntail
+                        ntail[k|A[i]]=true
+                        retSet[k|A[i]]=true
                 }
-                ntail[A[i]]=1
-                retSet[A[i]]=1
-                tail=ntail
+                ntail[A[i]]=true // set itself.
+                retSet[A[i]]=true // all result
+                tail=ntail // swap tail, for next i
         }
         return len(retSet)
 }
