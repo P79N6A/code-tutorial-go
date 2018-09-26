@@ -35,7 +35,22 @@ Note:
 S consists of lowercase letters only.
 */
 func main() {
-        fmt.Println(orderlyQueue("bxxweesaca",1))
+        //fmt.Println(orderlyQueue("bxxweesaca",3))
+        fmt.Println(orderlyQueue("gxzv",4))
+}
+
+
+
+type SortB []byte
+
+func (s SortB) Len() int {return len(s)}
+
+func (s SortB) Swap(i, j int) {
+        s[i], s[j] = s[j], s[i]
+}
+
+func (s SortB) Less(i, j int) bool {
+        return (s[i]) < (s[j])
 }
 /*
 问题：给了一个字符串，和一个长度K。规定一个操作可以将前K个字符的某一个，转移到最后。这个操作可以做任意次。 问最终转换出来的最小的字符串是什么？
@@ -50,20 +65,24 @@ A1A2….AiAi+1….An=>AiAi+1….AnA1A2….Ai-1  将A1-Ai-1挪到最后边去按�
 K=1的时候呢？ 这个是没法做swap的，因为规定了往后移动的只能是第一个。
 
 */
+
 func orderlyQueue(S string, K int) string {
-    if K > 1 {
-        bs := []byte(S)
-        sort.Slice(bs, func(i, j int) bool {
-            return bs[i] < bs[j]
-        })
-        return string(bs)
-    }
-    min := S
-    S = S+S // 找到所有的变化后子串，循环子串，得到最小
-    for i:=0;i<len(min);i++ {
-        if S[i:i+len(min)] < min {
-            min = S[i:i+len(min)]
+        if K > 1 {
+                bs := []byte(S)
+                sort.Sort(SortB(bs))
+                /*
+                sort.Slice(bs, func(i, j int) bool {
+                        return bs[i] < bs[j]
+                })
+                */
+                return string(bs)
         }
-    }
-    return min
+        min := S
+        S = S+S
+        for i:=0;i<len(min);i++ {
+                if S[i:i+len(min)] < min {
+                        min = S[i:i+len(min)]
+                }
+        }
+        return min
 }
