@@ -27,15 +27,14 @@ Explanation: The array cannot be partitioned into equal sum subsets.
 */
 func canPartition(nums []int) bool {
         sum := 0
-        for i := 0; i < len(nums); i++ {
-                sum += nums[i]
-        }
+        for _,n := range nums {sum += n}
         if sum % 2 == 1 {
                 return false
         }
         w := sum / 2
         dp := make([]bool, w + 1)
         dp[0] = true
+        // dp[i][w]=dp[i-1][w] || dp[i][w-nums[i]]
         for _, num := range nums {
                 for i := w; i >= 0; i-- {
                         if i >= num {

@@ -28,6 +28,7 @@ func main() {
     fmt.Println(coinChange([]int{2},3))
 }
 func coinChange(coins []int, amount int) int {
+    // 区间dp
     // dp[i]=min(dp[i-x]+1) x in coins
     dp := make([]int,amount+1)
     for i:=1;i<=amount;i++ {

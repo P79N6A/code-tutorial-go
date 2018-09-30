@@ -18,3 +18,14 @@ func main() {
     fmt.Println(e3)
 
 }
+ type ListNode struct {
+         Val int
+         Next *ListNode
+     }
+func removeElements(head *ListNode, val int) *ListNode {
+    if head == nil {
+        return nil
+    }
+    head.Next= removeElements(head.Next, val)
+    return map[bool]*ListNode{true: head.Next, false: head}[head.Val == val]
+}

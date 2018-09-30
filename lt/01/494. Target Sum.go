@@ -31,26 +31,21 @@ A=(target+sum)/2
 */
 func findTargetSumWays(nums []int, S int) int {
         sum := 0
-        for i:=0;i<len(nums);i++ {
-                sum += nums[i]
-        }
-        if S>sum || (sum+S)%2 == 1 {
-                return 0
-        }
+        for i:=0;i<len(nums);i++ {sum += nums[i]}
+        if S>sum || (sum+S)%2 == 1 {return 0}
         w := (S+sum)/2
         dp := make([]int,w+1)
         dp[0]=1
         // dp[i][w] = dp[i-1][w] + dp[i-1][w-nums[i]]
         // i 可以去掉,只有一个数组就可以了,保证从后往前计算.
-        for i:=0;i<len(nums);i++ {
-                for j:=w;j>=0;j-- {
+        for i:=0;i<len(nums);i++ { // 01背包物品在外层循环
+                for j:=w;j>=0;j-- {  // weight 在内层，保证从大到小
                         if j >= nums[i] {
                                 dp[j]=dp[j]+dp[j-nums[i]]
                         }
                 }
         }
         return dp[w]
-
 }
 func main() {
         //fmt.Println(findTargetSumWays([]int{1,1,1,1,1},3))
