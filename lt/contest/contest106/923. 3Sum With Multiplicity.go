@@ -11,54 +11,41 @@ func main() {
 }
 
 func threeSumMulti(A []int, ttt int) int {
-        var target int64 = int64(ttt)
-        mod := int64(1e9)+7
-        num := make(map[int64]int)
-        read := make(map[int64]int64)
-        for _,a := range A {
-                num[int64(a)] += 1
-                read[int64(a)]+=1
+    var target int64 = int64(ttt)
+    mod := int64(1e9)+7
+    read := make(map[int64]int64)
+    for _,a := range A {read[int64(a)]+=1}
+    var ans int64 = 0
+    for first,_ := range read {
+        // one first a<b<c or a<b==c
+        t := target-first
+        if first < t {
+            ans += read[first]*twosum(read,t,first)
         }
-        var ans int64 = 0
-        for first,_ := range num {
-                // one first
-                t := target-first
-                if first < t {
-                        read[first]-=1
-                        aa := twosum(read,t,first)
-                        read[first]+=1
-                        ans += read[first]*aa
-                }
-                // two first
-                t = target - 2 * first
-                if first < t && read[t] > 0{
-                        ans += read[first]*(read[first]-1)*read[t]/2
-                }
-                // three first.
-                if target == 3*first {
-                        ans += read[first]*(read[first]-1)*(read[first]-2)/6
-                }
+        // two first a=b<c
+        t = target - 2 * first
+        if first < t && read[t] > 0{
+            ans += read[first]*(read[first]-1)*read[t]/2
         }
-        return int(ans%mod)
+        // three first.  a=b=c
+        if target == 3*first {
+            ans += read[first]*(read[first]-1)*(read[first]-2)/6
+        }
+    }
+    return int(ans%mod)
 }
 func twosum(a map[int64]int64,target int64,first int64) int64 { // not include first .
-        mod := int64(1e9)+7
-        var ans int64 = 0
-        for second,v := range a {
-                if first >=second {
-                        continue
-                }
-                third := target-second
-                if third>=second&&a[third] > 0 {
-                        var aa int64
-                        if third == second {
-                                aa = a[third]*(a[third]-1)/2
-                        } else {
-                                aa = a[third]*v
-                        }
-                        ans += aa
-                        ans %=mod
-                }
+    var ans int64 = 0
+    for second,v := range a {
+        if first >=second {continue}
+        third := target-second
+        if third>=second&&a[third] > 0 {
+            if third == second {
+                ans += a[third]*(a[third]-1)/2
+            } else {
+                ans += a[third]*v
+            }
         }
-        return ans
+    }
+    return ans
 }

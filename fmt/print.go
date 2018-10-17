@@ -26,4 +26,9 @@ func main() {
     aa := "123456789"
     fmt.Println(aa[:5])
 
+    fmt.Printf( "%[2]v %[1]s\n","xx","yy")
+
+    fmt.Printf("%[3]*.[2]*[1]f", 12.0, 2, 6)
+
+
 }
