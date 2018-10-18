@@ -18,7 +18,33 @@ package main
 这个例子中：
 client 调用server地址  http://localhost:8000/
 server 的 / 会rewrite到 /gettime 然后返回结果
-json:
+
+
+http request 实现原理， 在request的header里面添加uber-trace-id 头
+并且client和server做http request的时候，都会讲相关信息发送给zipkin。  通过wireshark，显示过滤器指定http即可。
+Frame 7: 240 bytes on wire (1920 bits), 240 bytes captured (1920 bits) on interface 0
+Null/Loopback
+Internet Protocol Version 6, Src: localhost (::1), Dst: localhost (::1)
+Transmission Control Protocol, Src Port: 63818 (63818), Dst Port: irdmi (8000), Seq: 1, Ack: 1, Len: 164
+Hypertext Transfer Protocol
+    GET / HTTP/1.1\r\n
+        [Expert Info (Chat/Sequence): GET / HTTP/1.1\r\n]
+        Request Method: GET
+        Request URI: /
+        Request Version: HTTP/1.1
+    Host: localhost:8000\r\n
+    User-Agent: Go-http-client/1.1\r\n
+    Uber-Trace-Id: 194f7f08e3042392:53fdfe4d35236dd9:48b1de0f73aca7df:1\r\n
+    Accept-Encoding: gzip\r\n
+    \r\n
+    [Full request URI: http://localhost:8000/]
+    [HTTP request 1/2]
+    [Response in frame: 9]
+    [Next request in frame: 13]
+
+
+
+这个是zipkin收到的json:
 [
   {
     "traceId": "0bf09e880a9a71f1",
@@ -228,6 +254,7 @@ import (
     "flag"
     "github.com/uber/jaeger-client-go/transport/zipkin"
     "github.com/uber/jaeger-client-go"
+    "net/http/httputil"
 )
 
 func runClient(tracer opentracing.Tracer) {
@@ -255,11 +282,15 @@ func runClient(tracer opentracing.Tracer) {
     req, ht := nethttp.TraceRequest(tracer, req)
     defer ht.Finish()
 
+    reqstr,_ := httputil.DumpRequest(req,true)
+    fmt.Println(string(reqstr))
     res, err := c.Do(req)
     if err != nil {
         onError(span, err)
         return
     }
+    resstr,_ := httputil.DumpResponse(res,true)
+    fmt.Println(string(resstr))
     defer res.Body.Close()
     body, err := ioutil.ReadAll(res.Body)
     if err != nil {
