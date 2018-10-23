@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+    fmt.Println((-1+3)%3)
     a := 123
     f := 1.23456
     fmt.Printf("%+10d\n", a) //+123
