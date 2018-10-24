@@ -26,4 +26,8 @@ func main() {
         fmt.Println(ssss)
         fmt.Println(ss)
         fmt.Println(sub[:0])
+        fs := strings.Fields("abcdegf fwfew")
+        for _,f := range fs {
+            fmt.Println(f)
+        }
 }
