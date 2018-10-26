@@ -2,7 +2,6 @@ package main
 
 import (
         "fmt"
-        "math"
 )
 
 func main() {
@@ -11,5 +10,6 @@ func main() {
         fmt.Println(1^0)
         fmt.Println(0^0)
         fmt.Println(-1%3)
-        math.MaxInt64
+        fmt.Println(2)
+        var a int
 }

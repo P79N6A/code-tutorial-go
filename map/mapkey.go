@@ -16,6 +16,10 @@ func main() {
         fmt.Println("equall...")
     }
     fmt.Println(e3)
+    m := make(map[*Element]bool)
+    m[e3]=true
+    fmt.Println(m[&e2])
+    fmt.Println(m[e3])
 
 }
  type ListNode struct {
