@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 
 //Design and implement a data structure for Least Frequently Used (LFU) cache. It should support the following operations: get and put.
 //
@@ -25,7 +27,32 @@ package main
 //cache.get(4);       // returns 4
 
 func main() {
-    
+    lfu := Constructor(2)
+    /*
+    lfu.Put(1, 1)
+    lfu.Put(2, 2)
+    fmt.Println(lfu.Get(1))
+    lfu.Put(3, 3)
+    fmt.Println(lfu.Get(2))
+    fmt.Println(lfu.Get(3))
+    lfu.Put(4, 4)
+    fmt.Println(lfu.Get(1))
+    fmt.Println(lfu.Get(3))
+    fmt.Println(lfu.Get(4))
+    */
+    a := []string{"LFUCache","put","put","put","put","put","get","put","get","get","put","get","put","put","put","get","put","get","get","get","get","put","put","get","get","get","put","put","get","put","get","put","get","get","get","put","put","put","get","put","get","get","put","put","get","put","put","put","put","get","put","put","get","put","put","get","put","put","put","put","put","get","put","put","get","put","get","get","get","put","get","get","put","put","put","put","get","put","put","put","put","get","get","get","put","put","put","get","put","put","put","get","put","put","put","get","get","get","put","put","put","put","get","put","put","put","put","put","put","put"}
+    b := [][]int{{10},{10,13},{3,17},{6,11},{10,5},{9,10},{13},{2,19},{2},{3},{5,25},{8},{9,22},{5,5},{1,30},{11},{9,12},{7},{5},{8},{9},{4,30},{9,3},{9},{10},{10},{6,14},{3,1},{3},{10,11},{8},{2,14},{1},{5},{4},{11,4},{12,24},{5,18},{13},{7,23},{8},{12},{3,27},{2,12},{5},{2,9},{13,4},{8,18},{1,7},{6},{9,29},{8,21},{5},{6,30},{1,12},{10},{4,15},{7,22},{11,26},{8,17},{9,29},{5},{3,4},{11,30},{12},{4,29},{3},{9},{6},{3,4},{1},{10},{3,29},{10,28},{1,20},{11,13},{3},{3,12},{3,8},{10,9},{3,26},{8},{7},{5},{13,17},{2,27},{11,15},{12},{9,19},{2,15},{3,16},{1},{12,17},{9,1},{6,19},{4},{5},{5},{8,1},{11,7},{5,2},{9,28},{1},{2,2},{7,4},{4,22},{7,24},{9,26},{13,28},{11,26}}
+    ans := make([]int,0)
+    for i:=0;i<len(a);i++ {
+        fmt.Println(a[i],b[i])
+        if a[i]=="put" {
+            lfu.Put(b[i][0],b[i][1])
+        } else if a[i]=="get" {
+            ans = append(ans,lfu.Get(b[i][0]))
+        }
+    }
+    fmt.Println(ans)
+
 }
 /*
 问题：按照频次更换缓存
@@ -37,53 +64,57 @@ func main() {
 解决维护lru顺序删除数据问题。
 3.min 记录最小的freq
 */
-
-
 type listnode struct {
     key  int
     next *listnode
 }
-func get(head *listnode, idx int) int {
-    if head == nil {
-        return -1
-    }
-    if idx == 0 {
-        return head.val
-    }
-    return get(head.next, idx-1)
-}
-func add(head *listnode, idx int, n *listnode) {
-    if idx == 0 {
-        n.next = head.next
-        head.next = n
-        return
-    }
-    add(head.next, idx-1, n)
-}
-func deletelist(head *listnode, idx int) {
-    if head == nil||head.next == nil {return}
-    // not first.
-    if idx == 0 {
-        head.next = head.next.next
-        return
-    }
-    deletelist(head, idx-1)
-}
 //////////////////////////
 type LinkList struct {
-    head,tail *listnode
-    lens int
+    head, tail *listnode
+    lens       int
 }
+
 func (l *LinkList)AddTail(k int) {
-
+    n := &listnode{k, nil}
+    if l.tail == nil {
+        l.tail = n
+        l.head = n
+    } else {
+        l.tail.next = n
+        l.tail = l.tail.next
+    }
+    l.lens += 1
 }
-func (l *LinkList)DelByKey(k int)  {
-
+func (l *LinkList)DelByKey(k int) {
+    if l.head == nil {
+        return
+    }
+    l.head = deletek(l.head, k)
+    if l.head == nil {
+        l.tail = nil
+    }
+    l.lens -= 1
+}
+func deletek(h *listnode, k int) *listnode {
+    if h == nil {
+        return nil
+    }
+    if h.key == k {
+        return h.next
+    }
+    h.next = deletek(h.next, k)
+    return h
 }
 func (l *LinkList)DelFront() int {
-
+    x := l.head.key
+    l.head = l.head.next
+    l.lens -= 1
+    return x
 }
 func (l *LinkList)Lens() int {
+    if l == nil {
+        return 0
+    }
     return l.lens
 }
 
@@ -91,13 +122,13 @@ type LFUCache struct {
     // key is key ,value is value
     value map[int]int
     // key is key ,value is freq
-    count map[int]int
+    count map[int]int  // 可以快速定位指定key的freq,从这个来在freq里面索引key-counter
     // key is freq,value is list, for lru
-    freq map[int]*LinkList
-    min int
-    cap int
+    // LinkList需要支持的操作: delFront[LRU,最近未使用的],delbykey[按照key删除],在队尾增加
+    freq  map[int]*LinkList
+    min   int
+    cap   int
 }
-
 
 func Constructor(capacity int) LFUCache {
     return LFUCache{
@@ -109,44 +140,47 @@ func Constructor(capacity int) LFUCache {
     }
 }
 
-
 func (this *LFUCache) Get(key int) int {
-    if _,ok := this.value[key];!ok {return -1}
+    if _, ok := this.value[key]; !ok {
+        return -1
+    }
     freq := this.count[key] // 获取key当前频次
-    this.count[key]+=1  // 频次+1
+    this.count[key] += 1  // 频次+1
     this.freq[freq].DelByKey(key) // 从lru的list中删掉，挪到另外的freq队列，加到队尾，删除方便。
-    if this.min==freq&&this.freq[freq].lens==0 {
-        this.min+=1 // freq的删除key都需要触发是否更新min的操作
+    if this.min == freq&&this.freq[freq].lens == 0 {
+        this.min += 1 // freq的删除key都需要触发是否更新min的操作
     }
-    if this.freq[freq+1]==nil{
-        this.freq[freq+1]=&LinkList{}
+    if this.freq[freq + 1] == nil {
+        this.freq[freq + 1] = &LinkList{}
     }
-    this.freq[freq+1].AddTail(key)
+    this.freq[freq + 1].AddTail(key)
     return this.value[key]
 }
 
-
-func (this *LFUCache) Put(key int, value int)  {
-    if _,ok := this.value[key];ok {
+func (this *LFUCache) Put(key int, value int) {
+    if this.cap <= 0 {return}
+    if _, ok := this.value[key]; ok {
         //如果存在就是更新key对应的value就ok了
-        this.value[key]=value
+        this.value[key] = value
         this.Get(key)
         return
     }
     // 看下是否超过cap需要删掉最小的min对应的key，value
     if len(this.value) >= this.cap {
         evit := this.freq[this.min].DelFront()
-        delete(this.value,evit)
+        delete(this.value, evit)
         if this.freq[this.min].Lens() <= 0 {
-            delete(this.freq,this.min)
+            delete(this.freq, this.min)
         }
     }
-
-    this.value[key]=value
-    this.count[key]=1
+    // 插入新增元素,freq为1
+    this.value[key] = value
+    this.count[key] = 1
     this.min = 1
+    if this.freq[1] == nil {
+        this.freq[1] = &LinkList{}
+    }
     this.freq[1].AddTail(key)
-
 }
 
 
