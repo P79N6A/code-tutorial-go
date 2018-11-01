@@ -11,5 +11,4 @@ func main() {
 	fmt.Println(^x + 1)
 	fmt.Println(^(x - 1))
 	fmt.Println(x & (-x))
-
 }
