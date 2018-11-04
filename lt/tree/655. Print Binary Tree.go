@@ -1,4 +1,9 @@
 package main
+
+import (
+    "strconv"
+    "fmt"
+)
 /*
 Print a binary tree in an m*n 2D string array following these rules:
 
@@ -45,6 +50,12 @@ Note: The height of binary tree is in the range of [1, 10].
 */
 
 func main() {
+    //r := &TreeNode{1,&TreeNode{2,nil,&TreeNode{4,nil,nil}},&TreeNode{3,nil,nil}}
+    r := &TreeNode{1,&TreeNode{2,nil,nil},nil}
+    x := printTree(r)
+    for _,xx := range x {
+        fmt.Println(xx)
+    }
 }
 type TreeNode struct {
     Val   int
@@ -53,5 +64,33 @@ type TreeNode struct {
 }
 
 func printTree(root *TreeNode) [][]string {
-
+    if root==nil {return nil}
+    lines := depth(root)
+    row := rows(lines)
+    ans := make([][]string,0)
+    for i:=0;i<lines;i++ {
+        ans = append(ans,make([]string,row))
+    }
+    fill(root,0,row,0,&ans)
+    return ans
+}
+func fill(root *TreeNode,start,end int,depth int,ans *[][]string) {
+    if root == nil {return}
+    x := (start+end)/2
+    (*ans)[depth][x]=strconv.Itoa(root.Val)
+    fill(root.Left,start,x,depth+1,ans)
+    fill(root.Right,x+1,end,depth+1,ans)
+}
+func rows(n int) int {
+    if n== 1 {return 1}
+    return rows(n-1)*2+1 // 一共多少列
+}
+// lens N = 2*lens(N-1)+1
+func depth(root *TreeNode) int { //一共多少行
+    if root == nil {return 0}
+    return max(depth(root.Left),depth(root.Right))+1
+}
+func max(a,b int) int {
+    if a<b {return b}
+    return a
 }
