@@ -46,7 +46,7 @@ func main() {
 func removeStones(stones [][]int) int {
     rowg := make(map[int][][2]int)
     lineg := make(map[int][][2]int)
-    for _, s := range stones {
+    for _, s := range stones { // 构建邻接表
         if len(lineg[s[0]]) <= 0 {
             lineg[s[0]] = make([][2]int, 0)
         }
@@ -56,7 +56,7 @@ func removeStones(stones [][]int) int {
         }
         rowg[s[1]] = append(rowg[s[1]], [2]int{s[0], s[1]})
     }
-    group := 0
+    group := 0  //  按分了多少组
     visit := make(map[[2]int]bool)
     for _, s := range stones {
         n := [2]int{s[0], s[1]}
@@ -80,3 +80,4 @@ func dfs(node [2]int, visit map[[2]int]bool, rows, lines map[int][][2]int) {
         }
     }
 }
+///////////////////////
