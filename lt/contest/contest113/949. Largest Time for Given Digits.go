@@ -29,6 +29,11 @@ import "fmt"
 func main() {
     fmt.Println(largestTimeFromDigits([]int{3,3,4,5}))
 }
+/*
+排列4个数字所有的可能;看有效的
+
+可以四层否循环搞定。或者使用排列算法
+*/
 func largestTimeFromDigits(A []int) string {
     /*
     19:59

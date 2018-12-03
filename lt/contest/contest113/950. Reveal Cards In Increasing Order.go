@@ -48,13 +48,14 @@ func main() {
     fmt.Println(deckRevealedIncreasing([]int{17,13,11,2,3,5,7}))
     fmt.Println(deckRevealedIncreasing([]int{1,2,3,4}))
 }
+/*
+推演一下可以得到子问题。需要注意的是even和odd的情况是不一样的
+*/
 func deckRevealedIncreasing(deck []int) []int {
     return solve(deck)
 }
 func solve(deck []int) []int {
-    if len(deck)<=1 {
-        return deck
-    }
+    if len(deck)<=1 {return deck}
     sort.Ints(deck)
     half := (len(deck)+1)/2
     first := deck[:half]
