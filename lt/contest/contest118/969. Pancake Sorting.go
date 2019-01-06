@@ -55,21 +55,16 @@ func main() {
 
 func pancakeSort(A []int) []int {
     ans := make([]int,0)
-    n := len(A)
-    for {
-        if inorder(A,n) {
-            break
-        }
+    for n:=len(A);!inorder(A,n);n--{
         mi := maxi(A,n)
-        if mi<n-1&&mi>0 {
-            ans = append(ans,mi+1)
-            reverse(&A,0,mi)
-        }
-        if mi<n-1 {
+        if mi < n-1 {
+            if mi > 0 {
+                ans = append(ans,mi+1)
+                reverse(&A,0,mi)
+            }
             ans = append(ans, n)
             reverse(&A, 0, n-1)
         }
-        n -= 1
     }
     return ans
 }
