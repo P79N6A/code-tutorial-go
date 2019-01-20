@@ -35,7 +35,6 @@ The target node is a node in the tree.
 type parent struct {
         r *TreeNode
         rc *TreeNode
-
 }
 func distanceK(root *TreeNode, target *TreeNode, K int) []int {
         /*

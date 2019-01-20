@@ -16,13 +16,16 @@ func (t *Task)Run(i ITask) {
 	println("in Task Run  " + x)
 }
 type MyTask struct {
-	Task
+	*Task
 }
 func (t* MyTask)Inject() string {
-	return "Mytask"
+	return "Mytask" + t.name
 }
 
 func main() {
-	var t MyTask
-        fmt.Println(t.Inject())
+	t := &MyTask{
+		Task:&Task{"xxx"},
+	}
+
+	fmt.Println(t.Inject())
 }
